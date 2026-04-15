@@ -5,28 +5,7 @@ from logic.analisis_funcion import (
 )
 from logic.grafica import graficar_funcion_general
 from logic.calcular_secante import imprimir_tabla_secante, calcular_tabla_secante
-
-
-def _parsear_flotante(valor_texto: str) -> float:
-    """
-    Convierte texto a float aceptando formatos como '1.5' o fracciones '3/2'.
-    """
-    texto = valor_texto.strip()
-    if not texto:
-        raise ValueError("entrada vacia")
-
-    if "/" in texto:
-        partes = texto.split("/")
-        if len(partes) != 2:
-            raise ValueError(f"fraccion invalida: '{valor_texto}'")
-
-        numerador = float(partes[0].strip())
-        denominador = float(partes[1].strip())
-        if denominador == 0:
-            raise ValueError("el denominador no puede ser cero")
-        return numerador / denominador
-
-    return float(texto)
+from logic.entrada import normalizar_expresion_matematica, parsear_flotante
 
 
 def ejecutar_modo_interactivo() -> None:
@@ -41,11 +20,12 @@ def ejecutar_modo_interactivo() -> None:
         return
 
     try:
-        funcion_objetivo = construir_funcion_desde_texto(expresion_usuario)
+        expresion_normalizada = normalizar_expresion_matematica(expresion_usuario)
+        funcion_objetivo = construir_funcion_desde_texto(expresion_normalizada)
 
-        x0 = _parsear_flotante(input())
-        x1 = _parsear_flotante(input())
-        tolerancia_error = _parsear_flotante(input())
+        x0 = parsear_flotante(input())
+        x1 = parsear_flotante(input())
+        tolerancia_error = parsear_flotante(input())
         max_iteraciones = int(input().strip())
 
         tabla_datos = calcular_tabla_secante(funcion_objetivo, x0, x1, tolerancia_error, max_iteraciones)
@@ -63,7 +43,7 @@ def ejecutar_modo_interactivo() -> None:
         # 4. Delegamos la visualizacion a su funcion especifica
         graficar_funcion_general(
             funcion_objetivo=funcion_objetivo,
-            expresion_matematica=expresion_usuario,
+            expresion_matematica=expresion_normalizada,
             limite_inferior=x_min,
             limite_superior=x_max,
             x_minimo=x_minimo,
