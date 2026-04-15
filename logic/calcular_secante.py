@@ -68,4 +68,4 @@ def imprimir_tabla_secante(tabla_datos: List[Dict[str, Union[float, bool, int]]]
     print("Iteración | x_{n-1} | x_n | f(x_{n-1}) | f(x_n) | x_{n+1} | Error Absoluto | Cumple Tolerancia")
     print("-" * 100)
     for fila in tabla_datos:
-        print(f"{fila['iteracion']:9} | {fila['x_n-1']:7.6f} | {fila['x_n']:7.6f} | {fila['f(x_n-1)']:10.6f} | {fila['f(x_n)']:8.6f} | {fila['x_n+1']:7.6f} | {fila['error_absoluto']:12.6f} | {fila['cumple_tolerancia']}")
+        print(f"{fila['iteracion']:9} | {fila['x_n-1']:7.4f} | {fila['x_n']:7.4f} | {fila['f(x_n-1)']:10.4f} | {fila['f(x_n)']:8.4f} | {fila['x_n+1']:7.4f} | {fila['error_absoluto']:12.4f} | {fila['cumple_tolerancia']}")

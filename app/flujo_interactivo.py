@@ -1,10 +1,10 @@
-from analisis_funcion import (
+from logic.analisis_funcion import (
     construir_funcion_desde_texto,
     calcular_intervalo_desde_raices_y_f0,
     encontrar_extremos_funcion_general,
 )
-from grafica import graficar_funcion_general
-from calcular_secante import imprimir_tabla_secante, calcular_tabla_secante
+from logic.grafica import graficar_funcion_general
+from logic.calcular_secante import imprimir_tabla_secante, calcular_tabla_secante
 
 
 def _parsear_flotante(valor_texto: str) -> float:
@@ -34,8 +34,6 @@ def ejecutar_modo_interactivo() -> None:
     Punto de entrada para que el usuario ingrese la funcion por consola.
     Coordina los calculos y llama a la funcion de graficado.
     """
-    print("Escribe tu funcion usando 'x'.")
-    print("Ejemplos: x**3 - 6*x**2 + 11*x - 6   |   x**3 - 2*x**2 - x + 2")
     expresion_usuario = input("f(x) = ").strip()
 
     if not expresion_usuario:
@@ -45,13 +43,9 @@ def ejecutar_modo_interactivo() -> None:
     try:
         funcion_objetivo = construir_funcion_desde_texto(expresion_usuario)
 
-        print("Escribe X0:")
         x0 = _parsear_flotante(input())
-        print("Escribe X1:")
         x1 = _parsear_flotante(input())
-        print("Escribe la tolerancia de error:")
         tolerancia_error = _parsear_flotante(input())
-        print("Escribe el numero maximo de iteraciones:")
         max_iteraciones = int(input().strip())
 
         tabla_datos = calcular_tabla_secante(funcion_objetivo, x0, x1, tolerancia_error, max_iteraciones)
@@ -65,10 +59,6 @@ def ejecutar_modo_interactivo() -> None:
             funcion_objetivo, x_min, x_max, puntos_evaluacion=3000
         )
 
-        # 3. Mostramos resultados por consola
-        print(f"\nResultados aproximados en el intervalo [{x_min:.2f}, {x_max:.2f}]:")
-        print(f"Minimo: x = {x_minimo:.4f}, y = {y_minimo:.4f}")
-        print(f"Maximo: x = {x_maximo:.4f}, y = {y_maximo:.4f}")
 
         # 4. Delegamos la visualizacion a su funcion especifica
         graficar_funcion_general(
