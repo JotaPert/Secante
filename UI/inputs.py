@@ -3,6 +3,8 @@ import sys
 
 import streamlit as st
 
+st.set_page_config(page_title="Resolucion de Ecuaciones No Lineales", layout="wide")
+
 ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
@@ -31,8 +33,6 @@ if "modo_paso_a_paso" not in st.session_state:
 
 if "paso_actual" not in st.session_state:
     st.session_state["paso_actual"] = 1
-
-st.set_page_config(page_title="Resolucion de Ecuaciones No Lineales", layout="wide")
 
 st.markdown(
     """
