@@ -60,12 +60,3 @@ def calcular_tabla_secante(
         x_actual = x_siguiente
         
     return tabla_datos
-
-def imprimir_tabla_secante(tabla_datos: List[Dict[str, Union[float, bool, int]]]):
-    """
-    Imprime la tabla de datos del método de la secante.
-    """
-    print("Iteración | x_{n-1} | x_n | f(x_{n-1}) | f(x_n) | x_{n+1} | Error Absoluto | Cumple Tolerancia")
-    print("-" * 100)
-    for fila in tabla_datos:
-        print(f"{fila['iteracion']:9} | {fila['x_n-1']:7.4f} | {fila['x_n']:7.4f} | {fila['f(x_n-1)']:10.4f} | {fila['f(x_n)']:8.4f} | {fila['x_n+1']:7.4f} | {fila['error_absoluto']:12.4f} | {fila['cumple_tolerancia']}")
