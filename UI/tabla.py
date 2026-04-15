@@ -23,7 +23,7 @@ def formatear_tabla_secante(tabla_datos):
                 "f(x_n-1)",
                 "f(x_n)",
                 "x_n+1",
-                "Error absoluto",
+                "|xn - xn+1|",
                 "Cumple tolerancia",
             ]
         )
@@ -38,7 +38,7 @@ def formatear_tabla_secante(tabla_datos):
                 "f(x_n-1)": round(fila["f(x_n-1)"], 4),
                 "f(x_n)": round(fila["f(x_n)"], 4),
                 "x_n+1": round(fila["x_n+1"], 4),
-                "Error absoluto": round(fila["error_absoluto"], 4),
+                "|xn - xn+1|": round(fila["error_absoluto"], 4),
                 "Cumple tolerancia": "Sí" if fila["cumple_tolerancia"] else "No",
             }
         )
