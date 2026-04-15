@@ -17,7 +17,6 @@ def formatear_tabla_secante(tabla_datos):
     if not tabla_datos:
         return pd.DataFrame(
             columns=[
-                "Iteración",
                 "x_n-1",
                 "x_n",
                 "f(x_n-1)",
@@ -32,7 +31,6 @@ def formatear_tabla_secante(tabla_datos):
     for fila in tabla_datos:
         datos.append(
             {
-                "Iteración": fila["iteracion"],
                 "x_n-1": round(fila["x_n-1"], 4),
                 "x_n": round(fila["x_n"], 4),
                 "f(x_n-1)": round(fila["f(x_n-1)"], 4),
@@ -67,6 +65,6 @@ def mostrar_tabla_secante(tabla_datos):
 
     st.dataframe(
         df,
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )

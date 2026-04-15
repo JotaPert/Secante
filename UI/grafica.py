@@ -62,6 +62,8 @@ def mostrar_bloque_grafica(expresion: str, mostrar_grafica: bool) -> None:
 		)
 
 		st.subheader("Grafica de la funcion")
-		st.pyplot(figura, use_container_width=True)
+		col_izq, col_centro, col_der = st.columns([1, 3, 1])
+		with col_centro:
+			st.pyplot(figura, width="content")
 	except Exception as error:
 		st.warning(f"No se pudo graficar la funcion. Detalle: {error}")
