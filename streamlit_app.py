@@ -1,3 +1,6 @@
 """Entrypoint para despliegue en Streamlit Community Cloud."""
 
-from UI import inputs  # noqa: F401
+from app.flujo_interactivo import render_streamlit_app
+
+
+render_streamlit_app()
