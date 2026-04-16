@@ -75,6 +75,36 @@ def render_streamlit_app() -> None:
 
     st.set_page_config(page_title="Resolucion de Ecuaciones No Lineales", layout="wide")
 
+    st.markdown(
+        """
+        <style>
+            div[data-testid="stCheckbox"] {
+                margin: 0.35rem 0 0.55rem 0;
+            }
+
+            div[data-testid="stCheckbox"] > label:hover {
+                border-color: rgba(59, 130, 246, 0.5);
+                box-shadow: 0 2px 10px rgba(59, 130, 246, 0.14);
+                transform: translateY(-1px);
+            }
+
+            div[data-testid="stCheckbox"] [role="checkbox"] {
+                min-width: 1.1rem;
+                min-height: 1.1rem;
+                border-width: 2px;
+            }
+
+            div[data-testid="stCheckbox"] [data-testid="stMarkdownContainer"] p {
+                font-size: 1rem;
+                font-weight: 600;
+                margin: 0;
+                line-height: 1.2;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
     if "mostrar_grafica" not in st.session_state:
         st.session_state["mostrar_grafica"] = False
     if "resultado_secante" not in st.session_state:
@@ -99,8 +129,9 @@ def render_streamlit_app() -> None:
         with col_derecha:
             max_iter = st.slider("Maximo de iteraciones", min_value=1, max_value=20, value=10)
             tolerancia = st.text_input("Tolerancia de error", placeholder="0.1", value="0.1")
-            st.checkbox("Mostrar grafica", key="mostrar_grafica")
-            st.checkbox("Modo paso a paso", key="modo_paso_a_paso")
+            with st.container(border=False):
+                st.checkbox("Mostrar grafica", key="mostrar_grafica")
+                st.checkbox("Modo paso a paso", key="modo_paso_a_paso")
 
         ejecutar = st.button("Ejecutar calculo", type="primary")
 
@@ -143,11 +174,13 @@ def render_streamlit_app() -> None:
             with col_info:
                 st.info(f"Paso actual: {paso_actual} de {total_pasos}")
             with col_accion_1:
-                if st.button("Siguiente paso", disabled=paso_actual >= total_pasos):
+                if st.button("Siguiente paso", key="btn_siguiente_paso", disabled=paso_actual >= total_pasos):
                     st.session_state["paso_actual"] = min(total_pasos, paso_actual + 1)
+                    st.rerun()
             with col_accion_2:
-                if st.button("Reiniciar pasos"):
+                if st.button("Reiniciar pasos", key="btn_reiniciar_pasos"):
                     st.session_state["paso_actual"] = 1
+                    st.rerun()
 
             paso_actual = max(1, min(st.session_state["paso_actual"], total_pasos))
             mostrar_tabla_secante(tabla_datos[:paso_actual])
