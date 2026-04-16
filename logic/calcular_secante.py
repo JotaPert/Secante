@@ -4,8 +4,15 @@ def _calcular_siguiente_x_secante(x_actual: float, x_anterior: float, f_actual: 
     """
     Aplica la fórmula matemática del método de la secante.
     """
+    denominador = f_actual - f_anterior
+    if denominador == 0:
+        raise ValueError(
+            "No se puede aplicar el metodo de la secante: la division por cero es inevitable "
+            "porque f(x_n) y f(x_n-1) son iguales."
+        )
+
     # Usamos la forma estándar de la secante para mayor estabilidad numérica
-    return x_actual - f_actual * ((x_actual - x_anterior) / (f_actual - f_anterior))
+    return x_actual - f_actual * ((x_actual - x_anterior) / denominador)
 
 def calcular_tabla_secante(
     funcion: Callable[[float], float], 
@@ -25,12 +32,7 @@ def calcular_tabla_secante(
     for iteracion in range(max_iteraciones):
         f_anterior = funcion(x_anterior)
         f_actual = funcion(x_actual)
-        
-        # SEGURO: Evitar división por cero si las f(x) son iguales
-        if f_actual == f_anterior:
-            print(f"Advertencia: f_actual y f_anterior son iguales en la iteración {iteracion}. Deteniendo para evitar división por cero.")
-            break
-            
+
         x_siguiente = _calcular_siguiente_x_secante(x_actual, x_anterior, f_actual, f_anterior)
         
         # Corregido: Calculamos el error basándonos en las X, tal como indica tu imagen |x_n - x_n+1|

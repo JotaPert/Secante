@@ -43,7 +43,10 @@ def resolver_secante(
         raise ValueError("La tolerancia debe ser mayor a cero.")
 
     funcion_objetivo = construir_funcion_desde_texto(expresion_normalizada)
-    tabla_datos = calcular_tabla_secante(funcion_objetivo, x0, x1, tolerancia, max_iteraciones)
+    try:
+        tabla_datos = calcular_tabla_secante(funcion_objetivo, x0, x1, tolerancia, max_iteraciones)
+    except ValueError as error:
+        raise ValueError(str(error)) from error
     convergio = bool(tabla_datos and tabla_datos[-1]["cumple_tolerancia"])
 
     if not tabla_datos:
