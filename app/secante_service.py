@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 from typing import Any
 
-from logic.analisis_funcion import (
+from logic.analisis.funciones_objetivo import (
     calcular_intervalo_desde_raices_y_f0,
     construir_funcion_desde_texto,
     encontrar_extremos_funcion_general,
 )
-from logic.calcular_secante import calcular_tabla_secante
-from logic.entrada import normalizar_expresion_matematica, parsear_flotante
-from logic.grafica import graficar_funcion_general
+from logic.metodos.metodo_secante import calcular_tabla_secante
+from logic.parsing.parseo_entrada import normalizar_expresion_matematica, parsear_flotante
+from logic.visualizacion.visualizacion_funcion import graficar_funcion_general
 
 
 @dataclass

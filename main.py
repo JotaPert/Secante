@@ -1,4 +1,4 @@
-from app.flujo_interactivo import ejecutar_modo_interactivo
+from app.flujo_consola import ejecutar_modo_interactivo
 
 
 def main() -> None:

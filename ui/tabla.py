@@ -4,7 +4,7 @@ import streamlit as st
 
 def formatear_tabla_secante(tabla_datos):
     """
-    Convierte la lista de diccionarios del metodo de la secante en una tabla
+    Convierte la lista de diccionarios del método de la secante en una tabla
     mas limpia para mostrar en Streamlit.
     """
     if not tabla_datos:
@@ -39,7 +39,7 @@ def formatear_tabla_secante(tabla_datos):
 
 def mostrar_tabla_secante(tabla_datos):
     """
-    Renderiza la tabla del metodo de la secante con estilo visual simple.
+    Renderiza la tabla del método de la secante con estilo visual simple.
     """
     df = formatear_tabla_secante(tabla_datos)
 
