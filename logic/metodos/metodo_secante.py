@@ -5,10 +5,12 @@ def _calcular_siguiente_x_secante(x_actual: float, x_anterior: float, f_actual: 
     Aplica la fórmula matemática del método de la secante.
     """
     denominador = f_actual - f_anterior
-    if denominador == 0:
+    # Evita inestabilidad numerica cuando el denominador es cero (o casi cero).
+    if abs(denominador) < 1e-14:
         raise ValueError(
-            "No se puede aplicar el metodo de la secante: la division por cero es inevitable "
-            "porque f(x_n) y f(x_n-1) son iguales."
+            "No se puede aplicar el método de la secante: división por cero "
+            "(o casi cero) porque f(x_n) y f(x_n-1) son iguales. "
+            "Prueba con otros valores iniciales X0 y X1."
         )
 
     # Usamos la forma estándar de la secante para mayor estabilidad numérica

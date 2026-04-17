@@ -31,6 +31,24 @@ def _mostrar_estado_resultado(resultado) -> None:
         st.info("El método se detuvo por una condición numérica.")
 
 
+def _mensaje_error_usuario(error: ValueError) -> str:
+    mensaje = str(error).strip()
+
+    reemplazos = {
+        "could not convert string to float": "formato numérico inválido",
+        "entrada vacia": "entrada vacía",
+        "fraccion invalida": "fracción inválida",
+        "el denominador no puede ser cero": "el denominador no puede ser cero",
+    }
+
+    mensaje_normalizado = mensaje.lower()
+    for origen, destino in reemplazos.items():
+        if origen in mensaje_normalizado:
+            return mensaje.replace(origen, destino)
+
+    return mensaje
+
+
 def _mostrar_resumen_iterativo(tabla_datos: list[dict], total_pasos: int) -> dict | None:
     if st.session_state["modo_paso_a_paso"] and total_pasos > 0:
         col_info, col_accion_1, col_accion_2 = st.columns([2, 1, 1])
@@ -56,7 +74,7 @@ def _mostrar_resumen_iterativo(tabla_datos: list[dict], total_pasos: int) -> dic
 
 
 def render_streamlit_app() -> None:
-    st.set_page_config(page_title="Resolucion de Ecuaciones No Lineales", layout="wide")
+    st.set_page_config(page_title="Resolución de Ecuaciones No Lineales", layout="wide")
 
     st.markdown(
         """
@@ -105,9 +123,12 @@ def render_streamlit_app() -> None:
             )
             st.session_state["resultado_secante"] = resultado
             st.session_state["paso_actual"] = 1 if resultado.tabla_datos else 0
-        except Exception as error:
+        except ValueError as error:
             st.session_state["resultado_secante"] = None
-            st.error(f"No se pudo ejecutar el método. Detalle: {error}")
+            st.warning(_mensaje_error_usuario(error))
+        except Exception:
+            st.session_state["resultado_secante"] = None
+            st.error("Ocurrió un error inesperado al ejecutar el método. Revisa los datos e inténtalo de nuevo.")
 
     resultado = st.session_state.get("resultado_secante")
     fila_referencia = None

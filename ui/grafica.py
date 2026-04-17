@@ -15,5 +15,7 @@ def mostrar_bloque_grafica(expresion: str, mostrar_grafica: bool) -> None:
         col_izq, col_centro, col_der = st.columns([1, 3, 1])
         with col_centro:
             st.pyplot(figura, width="content")
-    except Exception as error:
-        st.warning(f"No se pudo graficar la función. Detalle: {error}")
+    except ValueError as error:
+        st.warning(f"No se pudo graficar la función: {error}")
+    except Exception:
+        st.warning("No se pudo graficar la función por un error inesperado.")

@@ -29,15 +29,26 @@ def resolver_secante(
 ) -> SecanteResultado:
     expresion_limpia = expresion.strip()
     if not expresion_limpia:
-        raise ValueError("Debes ingresar una funcion en f(x).")
+        raise ValueError("Debes ingresar una función en f(x).")
 
     if max_iteraciones < 1:
-        raise ValueError("El maximo de iteraciones debe ser mayor a 0.")
+        raise ValueError("El máximo de iteraciones debe ser mayor a 0.")
 
     expresion_normalizada = normalizar_expresion_matematica(expresion_limpia)
-    x0 = parsear_flotante(x0_texto)
-    x1 = parsear_flotante(x1_texto)
-    tolerancia = parsear_flotante(tolerancia_texto)
+    try:
+        x0 = parsear_flotante(x0_texto)
+    except ValueError as error:
+        raise ValueError(f"X0 no es válido: {error}") from error
+
+    try:
+        x1 = parsear_flotante(x1_texto)
+    except ValueError as error:
+        raise ValueError(f"X1 no es válido: {error}") from error
+
+    try:
+        tolerancia = parsear_flotante(tolerancia_texto)
+    except ValueError as error:
+        raise ValueError(f"La tolerancia no es válida: {error}") from error
 
     if tolerancia <= 0:
         raise ValueError("La tolerancia debe ser mayor a cero.")
